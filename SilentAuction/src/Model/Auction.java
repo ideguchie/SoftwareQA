@@ -20,17 +20,62 @@ public class Auction {
 		//populateAuction();
 	}
 	
-	public void addBidder() {
-		//TODO: this method adds bidders to the auction
+	/*
+	 * Adds a Bidder to the Auction.
+	 */
+	public void addBidder(Bidder bidder) {
+		bidders.add(bidder);
 	}
 	
-	public void addItem() {
-		//TODO: this method adds items to the auction
+	/*
+	 * Creates a Bidder and adds it to the Auction.
+	 */
+	public void addBidder(String name) {
+		Bidder bidder = new Bidder(name);
+		bidders.add(bidder);
 	}
 	
+	/*
+	 * Adds an Item to the Auction.
+	 */
+	public void addItem(Item item) {
+		items.add(item);
+	}
+	
+	/*
+	 * Creates an Item and adds it to the Auction.
+	 */
+	public void addItem(String name, float startBid) {
+		Item item = new Item(name, startBid);
+		items.add(item);
+	}
+	
+	/*
+	 * Returns the winners of the Auction.
+	 * @return Winning Bidders of the Auction.
+	 */
 	public List<Bidder> getWinners() {
-		//TODO: this method returns the list of winners
-		return null;
+		List<Bidder> winners = new ArrayList<>();
+		for(int i = 0; i < items.size(); i++) {
+			winners.add(items.get(i).getWinner());
+		}
+		return winners;
+	}
+	
+	/*
+	 * Prints the Auction information to the console. (For testing purposes)
+	 */
+	public void print() {
+		for(int i = 0; i < items.size(); i++) {
+			System.out.print(items.get(i).toString());
+		}
+		for(int i = 0; i < bidders.size(); i++) {
+			System.out.print(bidders.get(i).toString());
+		}
+	}
+	
+	public void closeAuction() {
+		//TODO: this method saves the Auction and stores the data in a database
 	}
 	
 	private void populateAuction() {

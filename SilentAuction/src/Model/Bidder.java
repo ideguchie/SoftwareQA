@@ -12,13 +12,22 @@ public class Bidder {
 	int id;
 	String name;
 	
-	public Bidder() {
+	public Bidder(String name) {
 		items = new ArrayList<>();
 		id = 0;
-		name = "name";
+		this.name = name;
 	}
 	
 	public void placeBid(Item item) {
-		//TODO: this method places a bid on an item
+		//TODO: this method places a bid on an item.
+	}
+	
+	/*
+	 * @Override
+	 * Returns the Bidder information.
+	 * @return Bidder information.
+	 */
+	public String toString() {
+		return "Name: " + name + "\n";
 	}
 }

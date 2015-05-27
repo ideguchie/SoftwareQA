@@ -4,36 +4,54 @@
  */
 package Model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.Icon;
 
 public class Item {
 	String name;
-	Icon itemImage;
 	String description;
+	Icon itemImage;
+	int id;
 	float currentBid;
 	float startBid;
 	float retail;
-	List<Bidder> bids;
+	Map<Float, Bidder> bids;
 	
-	public Item() {
-		name = "item";
-		itemImage = null;
-		description = "description";
-		currentBid = 1.00f;
-		startBid = 1.00f;
-		retail = 1.00f;
-		bids = new ArrayList<>();
+	public Item(String name, float startBid) {
+		this.name = name;
+		this.itemImage = null;
+		this.id = 0;
+		this.description = "description";
+		this.currentBid = startBid;
+		this.startBid = startBid;
+		this.retail = 1.00f;
+		this.bids = new HashMap<>();
 	}
 	
-	public void updateBid() {
-		//TODO: this method updates the current bid
+	/*
+	 * Updates the current bid and notifies bidders of the current bid.
+	 */
+	public void updateBid(Bidder bidder, float bid) {
+		currentBid = bid;
+		bids.put(bid, bidder);
 	}
 	
+	/*
+	 * This method returns highest bidder on the item.
+	 * @return Winning Bidder.
+	 */
 	public Bidder getWinner() {
-		//TODO: this method returns the winner of the item
-		return null;
+		return bids.get(currentBid);
+	}
+	
+	/*
+	 * @Override
+	 * Returns the Item information.
+	 * @return Item information.
+	 */
+	public String toString() {
+		return "Item: " + name + "\nCurrent Bid: " + currentBid + "\n";
 	}
 }
