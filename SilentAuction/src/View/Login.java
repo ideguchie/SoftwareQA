@@ -49,7 +49,7 @@ public class Login {
 		enter.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				AuctionWindow window = new AuctionWindow();
+				AuctionSelectWindow window = new AuctionSelectWindow();
 				myFrame.dispose();
 			}
 		});

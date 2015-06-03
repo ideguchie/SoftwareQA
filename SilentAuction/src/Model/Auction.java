@@ -4,6 +4,9 @@
  */
 package Model;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -12,12 +15,19 @@ public class Auction {
 	List<Bidder> bidders;
 	List<Item> items;
 	Timer timer;
+	String name;
 	
-	public Auction() {
+	public Auction(String name) {
 		bidders = new ArrayList<>();
 		items = new ArrayList<>();
 		timer = new Timer();
-		//populateAuction();
+		this.name = name;
+//		try {
+//			populateAuction();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 	
 	/*
@@ -51,6 +61,22 @@ public class Auction {
 	}
 	
 	/*
+	 * Returns the list of Bidders in the Auction.
+	 * @return List of Bidders.
+	 */
+	public List<Bidder> getBidders() {
+		return bidders;
+	}
+	
+	/*
+	 * Returns the list of Items in the Auction.
+	 * @return List of Items.
+	 */
+	public List<Item> getItems() {
+		return items;
+	}
+	
+	/*
 	 * Returns the winners of the Auction.
 	 * @return Winning Bidders of the Auction.
 	 */
@@ -78,8 +104,21 @@ public class Auction {
 		//TODO: this method saves the Auction and stores the data in a database
 	}
 	
-	private void populateAuction() {
+	/*
+	 * Retrieves data from database when auction loads
+	 */
+	private void populateAuction() throws IOException{
 		//TODO: this method retrieves data from database when auction loads
+		BufferedReader br = new BufferedReader(new FileReader("SilentAuction/My_Auctions" + name + "/Bidder.txt"));
+		try {
+			String line = br.readLine();
+			while(br.readLine() != null) {
+				addBidder(line);
+				line = br.readLine();
+			}
+		} finally {
+			br.close();
+		}
 	}
 	
 }
