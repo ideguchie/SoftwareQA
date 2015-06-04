@@ -12,6 +12,10 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
@@ -149,6 +153,8 @@ public class AuctionSelectWindow {
 	/**
 	 * Sets up the button that allows for the creation of
 	 * new Auctions.
+	 * Also creates bidder and item text files in the
+	 * auction folder.
 	 * @return the createAuction button.
 	 */
 	private JButton createNewAuction() {
@@ -168,6 +174,16 @@ public class AuctionSelectWindow {
 						String name = auctionName.getText();
 						String folder = System.getProperty("user.dir") + "/My_Auctions/";
 						new File(folder + name).mkdirs();
+						try {
+							Path bidderPath = Paths.get(folder + name + "/Bidders.txt");
+							Path itemPath = Paths.get(folder + name + "/Items.txt");
+							Files.createFile(bidderPath);
+							Files.createFile(itemPath);
+							
+						} catch (IOException ex) {
+							ex.printStackTrace();
+						}
+						
 						getAuctionName.dispose();
 						myWindow.dispose();
 						AuctionSelectWindow another = new AuctionSelectWindow();
