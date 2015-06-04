@@ -10,14 +10,14 @@ import java.util.Map;
 import javax.swing.Icon;
 
 public class Item {
-	String name;
-	String description;
-	Icon itemImage;
-	int id;
-	float currentBid;
-	float startBid;
-	float retail;
-	Map<Float, Bidder> bids;
+	private String name;
+	private String description;
+	private Icon itemImage;
+	private int id;
+	private float currentBid;
+	private float startBid;
+	private float retail;
+	private Map<Float, Bidder> bids;
 	
 	public Item(String name, float startBid) {
 		this.name = name;
@@ -38,6 +38,22 @@ public class Item {
 		bids.put(bid, bidder);
 	}
 	
+	public String getName() {
+		return name;
+	}
+	
+	public String getDescription() {
+		return description;
+	}
+	
+	public float getCurrentBid() {
+		return currentBid;
+	}
+	
+	public float getStartBid() {
+		return startBid;
+	}
+	
 	/*
 	 * This method returns highest bidder on the item.
 	 * @return Winning Bidder.
@@ -52,6 +68,6 @@ public class Item {
 	 * @return Item information.
 	 */
 	public String toString() {
-		return "Item: " + name + "\nCurrent Bid: " + currentBid + "\n";
+		return "Item: " + name; //+ "\nCurrent Bid: " + currentBid + "\n";
 	}
 }

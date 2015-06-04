@@ -1,3 +1,8 @@
+/*
+ * @author Brandon Scholer
+ * @Version 6/3/2015
+ */
+
 package View;
 
 import java.awt.BorderLayout;
@@ -22,20 +27,46 @@ import javax.swing.JTextField;
 
 import Model.Auction;
 
+/**
+ * Class that allows acess to auctions.
+ * @author Brandon
+ *
+ */
 public class AuctionSelectWindow {
 	
+	/**
+	 * The window that the auctions will be displayed on.
+	 */
 	JFrame myWindow;
+	
+	/**
+	 * The List that contains the Auctions.
+	 */
 	JList<String> myAuctionList;
+	
+	/**
+	 * The Pane that contains the list.
+	 */
 	JScrollPane myScrollPane;
 	
+	/**
+	 * The dimension of the screen the program is being run on.
+	 */
 	Dimension screenSize;
 	
+	/**
+	 * Populates instance fields and starts window setup.
+	 */
 	public AuctionSelectWindow() {
 		myWindow = new JFrame("Auction List");
 		screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		setup();
 	}
 	
+	/**
+	 * Sets up the window that displays the various auctions
+	 * that are accessible.
+	 */
 	private void setup() {
 		
 		myWindow.setSize(screenSize.width / 2, screenSize.height / 2);
@@ -53,6 +84,9 @@ public class AuctionSelectWindow {
 		buttonSetup();
 	}
 	
+	/**
+	 * Sets up the buttons that will control auction selection.
+	 */
 	private void buttonSetup() {
 		
 		JPanel buttons = new JPanel();
@@ -92,6 +126,10 @@ public class AuctionSelectWindow {
 		
 	}
 
+	/**
+	 * Populates the list of Auctions.
+	 * @return list of auctions.
+	 */
 	private JList<String> setupAuctionList() {
 		
 		ArrayList<String> auctionNames = new ArrayList<String>();
@@ -108,6 +146,11 @@ public class AuctionSelectWindow {
 		return new JList(auctionNames.toArray());
 	}
 	
+	/**
+	 * Sets up the button that allows for the creation of
+	 * new Auctions.
+	 * @return the createAuction button.
+	 */
 	private JButton createNewAuction() {
 		JButton createAuction = new JButton("Create Auction");
 		createAuction.addActionListener(new ActionListener(){
@@ -117,7 +160,7 @@ public class AuctionSelectWindow {
 				JPanel textPanel = new JPanel();
 				JPanel buttonPanel = new JPanel();
 				JLabel nameLabel = new JLabel("Enter Name: ");
-				final JTextField auctionName = new JTextField(40);
+				final JTextField auctionName = new JTextField(20);
 				JButton okay = new JButton("Okay");
 				okay.addActionListener(new ActionListener() {
 					@Override

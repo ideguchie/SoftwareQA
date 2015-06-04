@@ -7,27 +7,38 @@ package Model;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 import java.util.Timer;
 
 public class Auction {
-	List<Bidder> bidders;
-	List<Item> items;
-	Timer timer;
-	String name;
+	private List<Bidder> bidders;
+	private List<Item> items;
+	private Timer timer;
+	private String name;
 	
 	public Auction(String name) {
 		bidders = new ArrayList<>();
 		items = new ArrayList<>();
 		timer = new Timer();
 		this.name = name;
-//		try {
-//			populateAuction();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		try {
+			populateAuction();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			try {
+				Path biddersFile = Paths.get(System.getProperty("user.dir") + "/My_Auction/" + name + "/Bidders.txt");
+				Files.createFile(biddersFile);
+				Path itemsFile = Paths.get(System.getProperty("user.dir") + "/My_Auction/" + name + "/Items.txt");
+				Files.createFile(itemsFile);
+			} catch (IOException ex) {
+				e.printStackTrace();
+			}	
+		}
 	}
 	
 	/*
@@ -58,6 +69,14 @@ public class Auction {
 	public void addItem(String name, float startBid) {
 		Item item = new Item(name, startBid);
 		items.add(item);
+	}
+	
+	public void removeBidder(int index) {
+		bidders.remove(index);
+	}
+	
+	public void removeItem(int index) {
+		items.remove(index);
 	}
 	
 	/*
@@ -102,6 +121,11 @@ public class Auction {
 	
 	public void closeAuction() {
 		//TODO: this method saves the Auction and stores the data in a database
+		
+//		for(int i = 0; i < bidders.size(); i++) {
+//			List<Item> items = bidders.get(i).getItems();
+//			write: bidders.get(i).getName(), bidders.get(i).getID(), items;
+//		}
 	}
 	
 	/*
@@ -109,16 +133,29 @@ public class Auction {
 	 */
 	private void populateAuction() throws IOException{
 		//TODO: this method retrieves data from database when auction loads
-		BufferedReader br = new BufferedReader(new FileReader("SilentAuction/My_Auctions" + name + "/Bidder.txt"));
+		String dir = System.getProperty("user.dir") + "/My_Auctions/";
+		BufferedReader bidders = new BufferedReader(new FileReader(dir + name + "/Bidders.txt"));
 		try {
-			String line = br.readLine();
-			while(br.readLine() != null) {
+			String line = bidders.readLine();
+			while(line != null) {
 				addBidder(line);
-				line = br.readLine();
+				line = bidders.readLine();
 			}
 		} finally {
-			br.close();
+			bidders.close();
+		}
+		BufferedReader items = new BufferedReader(new FileReader(dir + name + "/Items.txt"));
+		try {
+			String line = items.readLine();
+			while(line != null) {
+				StringTokenizer tok = new StringTokenizer(line,",");
+				String name = tok.nextToken();
+				String start = tok.nextToken();
+				addItem(name, Float.valueOf(start));
+				line = items.readLine();
+			}
+		} finally {
+			items.close();
 		}
 	}
-	
 }
